@@ -20,7 +20,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		case "GET":
 			get(w, r)
 		default:
-			fmt.Fprintf(w, "Incorrect response: GET method response is waited\n") 
+			fmt.Fprintf(w, "Incorrect request: GET method is waited\n") 
 	}
 }
 
