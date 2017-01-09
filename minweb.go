@@ -15,6 +15,16 @@ func main() {
 
 // handler echoes the Path component of the requested URL 
 func handler(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	switch r.Method {
+		case "GET":
+			get(w, r)
+		default:
+			fmt.Fprintf(w, "Incorrect response: GET method response is waited\n") 
+	}
+}
+
+func get (w http.ResponseWriter, r *http.Request) {
 	var name string = r.FormValue("name")
 	// defense of blank lines
 	strings.Replace(name, " ", "", -1)
