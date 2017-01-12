@@ -5,9 +5,11 @@ import (
  "log" 
  "net/http"
  "strings" 
+ "github.com/sirupsen/logrus" 
 ) 
 
 func main() {
+	logrus.Info("Hi. I am working!")
 	// each request contains /hello calls handler
 	http.HandleFunc("/hello", handler)  
 	log.Fatal(http.ListenAndServe("localhost:8000", nil)) 
@@ -30,7 +32,9 @@ func get (w http.ResponseWriter, r *http.Request) {
 	strings.Replace(name, " ", "", -1)
 	if strings.EqualFold(name, "") {
 		http.Error(w, "Please, enter the name in request", http.StatusBadRequest)
+		logrus.Info("Got request without name!")
 		return
 	}
 	fmt.Fprintf(w, "Hello, %v!\n", name) 
+	logrus.Infof("Got name, %v", name)
 }
