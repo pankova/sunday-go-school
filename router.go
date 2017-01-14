@@ -48,6 +48,7 @@ func post (w http.ResponseWriter, r *http.Request, param httprouter.Params) {
 	outName(w, name)
 }
 
+// общая для всех запросов функция вывода имени
 func outName (w http.ResponseWriter, name string){
 	// избавляемся от пустых строк
 	strings.Replace(name, " ", "", -1)
