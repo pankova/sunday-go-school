@@ -19,17 +19,23 @@ func main() {
 	log.Fatal(http.ListenAndServe(":8000", router)) 
 } 
 
+// обработка запроса с параметрами в строке, например
+// GET http://127.0.0.1:8000/hello\?name\=Def
 func getSimple (w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	name := r.URL.Query().Get("name")
 	outName(w, name)
 	
 }
 
+// обработка запроса с параметрами в параметрах роутера, например
+// GET http://127.0.0.1:8000/hello/Piu
 func getParam (w http.ResponseWriter, _ *http.Request, param httprouter.Params) {
 	name := param.ByName("name")
 	outName(w, name)
 }
 
+// обработка запроса с параметрами в его теле, например
+// POST -d "" http://127.0.0.1:8000/hello
 func post (w http.ResponseWriter, r *http.Request, param httprouter.Params) {
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -43,7 +49,7 @@ func post (w http.ResponseWriter, r *http.Request, param httprouter.Params) {
 }
 
 func outName (w http.ResponseWriter, name string){
-	// defense of blank lines
+	// избавляемся от пустых строк
 	strings.Replace(name, " ", "", -1)
 	if strings.EqualFold(name, "") {
 		http.Error(w, "Please, enter the name in request", http.StatusBadRequest)
